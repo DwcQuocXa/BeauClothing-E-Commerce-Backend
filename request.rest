@@ -1,0 +1,9 @@
+GET http://localhost:5000/api/v1/users/google-authenticate
+
+###
+POST http://localhost:5000/api/v1/users/google-authenticate
+Content-Type: application/json
+
+{
+    "token_Id": "fadjskhfsjak"
+}

@@ -1,11 +1,12 @@
 import mongoose, { Document } from "mongoose";
 
 export type UserDocument = Document & {
-  isAdmin: boolean;
-  isBanned: boolean;
-  name: string;
-  email: string;
-  password: string;
+  isAdmin?: boolean;
+  isBanned?: boolean;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  password?: string;
 };
 
 export const userSchema = new mongoose.Schema({
@@ -17,18 +18,22 @@ export const userSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  name: {
+  firstName: {
     type: String,
-    required: true,
+    required: false,
+  },
+  lastName: {
+    type: String,
+    required: false,
   },
   email: {
     type: String,
-    required: true,
-    unique: true,
+    required: false,
+    unique: false,
   },
   password: {
     type: String,
-    required: true,
+    required: false,
   },
 });
 
