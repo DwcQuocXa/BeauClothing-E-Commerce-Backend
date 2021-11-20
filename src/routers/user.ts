@@ -9,7 +9,7 @@ router.post("/", createUser);
 router.get("/", findAll);
 router.post(
   "/google-authenticate",
-  passport.authenticate("google-id-token"),
+  passport.authenticate("google-id-token", { session: false }),
   authenticate
 );
 

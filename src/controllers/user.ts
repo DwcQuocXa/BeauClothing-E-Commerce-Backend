@@ -69,9 +69,6 @@ export const authenticate = async (
         given_name,
         family_name,
         email,
-        // password,
-        // isAdmin,
-        // isBanned,
       },
       "test",
       {

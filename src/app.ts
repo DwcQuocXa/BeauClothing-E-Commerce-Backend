@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import passport from "passport";
+import Strategy from "./config/passport";
 
 import productRouter from "./routers/product";
 import userRouter from "./routers/user";
@@ -14,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
 app.use(passport.initialize());
-app.use(passport.session());
+passport.use(Strategy);
 
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/users", userRouter);
