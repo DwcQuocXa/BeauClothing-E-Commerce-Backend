@@ -3,10 +3,10 @@ import mongoose, { Document } from "mongoose";
 export type UserDocument = Document & {
   isAdmin?: boolean;
   isBanned?: boolean;
-  firstName?: string;
-  lastName?: string;
-  email?: string;
-  password?: string;
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
 };
 
 export const userSchema = new mongoose.Schema({
@@ -29,7 +29,7 @@ export const userSchema = new mongoose.Schema({
   email: {
     type: String,
     required: false,
-    unique: false,
+    unique: true,
   },
   password: {
     type: String,

@@ -1,12 +1,13 @@
 import express, { Response, Request } from "express";
 import passport from "passport";
 
-import { createUser, findAll, authenticate } from "../controllers/user";
+import { findAll, authenticate, signIn, signUp } from "../controllers/user";
 
 const router = express.Router();
 
-router.post("/", createUser);
 router.get("/", findAll);
+router.post("/signin", signIn);
+router.post("/signup", signUp);
 router.post(
   "/google-authenticate",
   passport.authenticate("google-id-token", { session: false }),
