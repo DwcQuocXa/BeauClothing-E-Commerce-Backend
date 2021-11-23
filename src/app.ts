@@ -5,6 +5,7 @@ import Strategy from "./config/passport";
 
 import productRouter from "./routers/product";
 import userRouter from "./routers/user";
+import authRouter from "./routers/auth";
 import errorHandler from "errorhandler";
 
 const app = express();
@@ -18,6 +19,7 @@ app.use(passport.initialize());
 passport.use(Strategy);
 
 app.use("/api/v1/products", productRouter);
+app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
 
 app.get("/", (req, res) => {

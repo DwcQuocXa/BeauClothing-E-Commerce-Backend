@@ -7,6 +7,7 @@ export type UserDocument = Document & {
   lastName: string;
   email: string;
   password: string;
+  cart: { product: mongoose.Types.ObjectId; quantity: number }[];
 };
 
 export const userSchema = new mongoose.Schema({
@@ -35,6 +36,12 @@ export const userSchema = new mongoose.Schema({
     type: String,
     required: false,
   },
+  cart: [
+    {
+      product: { type: mongoose.Schema.Types.ObjectId, ref: "Product" },
+      quantity: Number,
+    },
+  ],
 });
 
 export default mongoose.model<UserDocument>("User", userSchema);

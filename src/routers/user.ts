@@ -1,17 +1,19 @@
 import express, { Response, Request } from "express";
 import passport from "passport";
 
-import { findAll, authenticate, signIn, signUp } from "../controllers/user";
+import {
+  findAll,
+  getCart,
+  manageProductInCart,
+  removeProductInCart,
+} from "../controllers/user";
 
 const router = express.Router();
 
 router.get("/", findAll);
-router.post("/signin", signIn);
-router.post("/signup", signUp);
-router.post(
-  "/google-authenticate",
-  passport.authenticate("google-id-token", { session: false }),
-  authenticate
-);
+
+router.post("/cart", getCart);
+router.put("/cart", manageProductInCart);
+router.delete("/cart", removeProductInCart);
 
 export default router;
