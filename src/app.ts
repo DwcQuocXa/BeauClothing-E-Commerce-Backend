@@ -6,6 +6,7 @@ import Strategy from "./config/passport";
 import productRouter from "./routers/product";
 import userRouter from "./routers/user";
 import authRouter from "./routers/auth";
+import userAdmin from "./routers/admin";
 import errorHandler from "errorhandler";
 
 const app = express();
@@ -21,6 +22,7 @@ passport.use(Strategy);
 app.use("/api/v1/products", productRouter);
 app.use("/api/v1/auth", authRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/admin", userAdmin);
 
 app.get("/", (req, res) => {
   res.send("Deploy successfully");

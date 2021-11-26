@@ -65,8 +65,11 @@ export const signUp = async (
 
     const hashedPassword = await bcrypt.hash(password, 12);
 
+    //const isAdmin = email === "duc.ngogia2002@gmail.com" ? true : false;
+
     const result = await User.create({
-      email,
+      isAdmin: email === "duc.ngogia2002@gmail.com",
+      email: email,
       password: hashedPassword,
       firstName: firstName,
       lastName: lastName,
