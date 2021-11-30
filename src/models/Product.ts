@@ -24,13 +24,16 @@ const productSchema = new mongoose.Schema({
   categories: String,
   sizes: {
     type: Array,
-    default: ["XS", "S", "M", "L", "XL"],
+    //default: ["XS", "S", "M", "L", "XL"],
   },
   price: {
     type: Number,
     required: true,
   },
-  img: [String],
+  img: {
+    type: [String],
+    required: false,
+  },
 });
 
 export default mongoose.model<ProductDocument>("Product", productSchema);

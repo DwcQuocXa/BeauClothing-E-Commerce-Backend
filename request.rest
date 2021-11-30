@@ -7,3 +7,12 @@ Content-Type: application/json
 {
     "token_Id": "fadjskhfsjak"
 }
+
+###
+
+POST http://localhost:5000/api/v1/admin/products
+Content-Type: application/json
+
+{
+    "token_Id": "fadjskhfsjak"
+}

@@ -10,6 +10,7 @@ export const createProduct = async (
   res: Response,
   next: NextFunction
 ) => {
+  console.log("admin router");
   try {
     const { name, description, categories, sizes, price, img } = req.body;
 
@@ -21,6 +22,9 @@ export const createProduct = async (
       price,
       img,
     });
+
+    console.log(newProduct);
+    console.log("admin router");
 
     await ProductService.create(newProduct);
     res.json(newProduct);
