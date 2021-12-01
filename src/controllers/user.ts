@@ -1,16 +1,8 @@
 import { Request, Response, NextFunction } from "express";
-import jwt from "jsonwebtoken";
-import dotenv from "dotenv";
-import bcrypt from "bcryptjs";
 
 import User, { UserDocument } from "../models/User";
 import UserService from "../services/user";
-import {
-  NotFoundError,
-  BadRequestError,
-  InternalServerError,
-  ForbiddenError,
-} from "../helpers/apiError";
+import { NotFoundError, ForbiddenError } from "../helpers/apiError";
 
 export const findAll = async (
   req: Request,
@@ -18,10 +10,21 @@ export const findAll = async (
   next: NextFunction
 ) => {
   try {
-    const user: any = req.user;
-    if (user.isAdmin === true) {
-      res.json(await UserService.findAll());
-    } else throw new ForbiddenError("User is not admin");
+    res.json(await UserService.findAll());
+  } catch (error: any) {
+    if (error.statusCode === 403) next(new ForbiddenError(error.message));
+    next(new NotFoundError("User not found", error));
+  }
+};
+
+//PUT /users
+export const banOrUnbanUser = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.json(await UserService.banOrUnbanUser(req.body.userId));
   } catch (error: any) {
     if (error.statusCode === 403) next(new ForbiddenError(error.message));
     next(new NotFoundError("User not found", error));

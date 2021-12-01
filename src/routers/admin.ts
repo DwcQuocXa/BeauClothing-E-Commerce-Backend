@@ -1,4 +1,5 @@
 import express, { Router } from "express";
+import { banOrUnbanUser } from "../controllers/user";
 
 import {
   createProduct,
@@ -8,7 +9,7 @@ import {
 
 const router = express.Router();
 
-//router.put('/', banOrUnbanUser)
+router.put("/users/ban", banOrUnbanUser);
 
 router.post("/products", createProduct);
 router.put("/products/:productId", updateProduct);

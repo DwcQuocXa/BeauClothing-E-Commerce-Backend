@@ -1,8 +1,8 @@
 import User, { UserDocument } from "../models/User";
 import mongoose from "mongoose";
 
-const findAll = async (): Promise<UserDocument> => {
-  return User.find().exec().then();
+const findAll = async (): Promise<UserDocument[]> => {
+  return User.find();
 };
 
 const create = async (user: UserDocument): Promise<UserDocument> => {
@@ -22,6 +22,15 @@ const findOrCreate = async (payload: Partial<UserDocument>) => {
     return newUser;
   }
   return user;
+};
+
+const banOrUnbanUser = async (userId: string): Promise<UserDocument> => {
+  const user = await User.findById(userId);
+  if (!user) {
+    throw new Error(`User ${userId} not found`);
+  }
+  user.isBanned = !user.isBanned;
+  return user.save();
 };
 
 const getCart = async (userId: string): Promise<UserDocument> => {
@@ -117,4 +126,5 @@ export default {
   addProductToCart,
   decreaseQuantityOfProduct,
   removeProductInCart,
+  banOrUnbanUser,
 };
