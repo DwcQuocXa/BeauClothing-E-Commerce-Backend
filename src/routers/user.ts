@@ -12,7 +12,7 @@ const router = express.Router();
 
 router.get("/", findAll);
 
-router.post("/cart", getCart);
+router.get("/cart", getCart);
 router.put("/cart", manageProductInCart);
 router.delete("/cart", removeProductInCart);
 

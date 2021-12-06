@@ -1,6 +1,5 @@
 import User from "../../src/models/User";
 import Product from "../../src/models/Product";
-import { Request, Response, NextFunction } from "express";
 import UserService from "../../src/services/user";
 import ProductService from "../../src/services/product";
 import connect, { MongodHelper } from "../db-helper";
@@ -50,6 +49,13 @@ describe("user service", () => {
     expect(user).toHaveProperty("_id");
     expect(user).toHaveProperty("email", "random@gmail.com");
     expect(user).toHaveProperty("firstName", "Duc");
+  });
+
+  it("should get a list of all users", async () => {
+    const user = await createUser();
+    const found = await UserService.findAll();
+    expect(found.length).toEqual(1);
+    expect(found[0]._id).toEqual(user._id);
   });
 
   it("should get the cart", async () => {

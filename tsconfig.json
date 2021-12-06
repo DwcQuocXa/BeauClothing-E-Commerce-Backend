@@ -7,6 +7,8 @@
     "skipLibCheck": true,
     "target": "es6",
     "noImplicitAny": true,
+    "types": ["@types/jest", "@types/node"],
+    //"types": ["jest", "node"],
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "dist",

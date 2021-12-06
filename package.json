@@ -26,6 +26,7 @@
     "passport": "^0.4.1",
     "passport-google-id-token": "^0.4.7",
     "passport-google-verify-token": "^2.0.0",
+    "supertest": "^6.1.6",
     "ts-jest": "^24.3.0",
     "winston": "^3.3.3"
   },
