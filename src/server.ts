@@ -6,7 +6,7 @@ import app from "./app";
 //import { MONGODB_URI } from "./util/secrets";
 dotenv.config({ path: ".env" });
 
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5000;
 const mongodbUrl = process.env.MONGODB_URI as string;
 
 export const mongo = async () => {
