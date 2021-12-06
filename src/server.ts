@@ -10,6 +10,7 @@ const PORT = process.env.PORT;
 const mongodbUrl = process.env.MONGODB_URI as string;
 
 export const mongo = async () => {
+  await mongoose.disconnect();
   await mongoose
     .connect(mongodbUrl, {
       useNewUrlParser: true,
