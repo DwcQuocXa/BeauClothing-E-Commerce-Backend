@@ -14,11 +14,19 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const User_1 = __importDefault(require("../models/User"));
 const mongoose_1 = __importDefault(require("mongoose"));
+const apiError_1 = require("../helpers/apiError");
 const findAll = () => __awaiter(void 0, void 0, void 0, function* () {
     return User_1.default.find();
 });
 const create = (user) => __awaiter(void 0, void 0, void 0, function* () {
     return user.save();
+});
+const findById = (userId) => __awaiter(void 0, void 0, void 0, function* () {
+    const foundUser = yield User_1.default.findById(userId);
+    if (!foundUser) {
+        throw new apiError_1.NotFoundError(`User ${userId} is not found`);
+    }
+    return foundUser;
 });
 const findOrCreate = (payload) => __awaiter(void 0, void 0, void 0, function* () {
     const user = yield User_1.default.findOne();
@@ -108,6 +116,7 @@ const removeProductInCart = (productId, userId) => __awaiter(void 0, void 0, voi
 exports.default = {
     findAll,
     create,
+    findById,
     findOrCreate,
     getCart,
     addProductToCart,

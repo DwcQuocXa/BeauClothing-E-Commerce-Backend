@@ -12,7 +12,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.authenticate = exports.signUp = exports.signIn = void 0;
+exports.findByEmail = exports.authenticate = exports.signUp = exports.signIn = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const bcryptjs_1 = __importDefault(require("bcryptjs"));
@@ -64,7 +64,6 @@ const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
     }
     catch (error) {
         if (error.name === "ValidationError") {
-            console.log("bad");
             next(new apiError_1.BadRequestError("Invalid Request", error));
         }
         else {
@@ -74,18 +73,37 @@ const signUp = (req, res, next) => __awaiter(void 0, void 0, void 0, function* (
 });
 exports.signUp = signUp;
 const authenticate = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    const { result } = req.body;
     try {
-        const { given_name, family_name, email } = req.user;
+        const existingUser = yield User_1.default.findOne({ email: result.email });
+        if (existingUser) {
+            const token = jsonwebtoken_1.default.sign({ email: existingUser.email, id: existingUser._id }, JWT_SECRET, { expiresIn: "1h" });
+            res.status(200).json({ result: existingUser, token });
+        }
         const token = jsonwebtoken_1.default.sign({
-            given_name,
-            family_name,
-            email,
+            email: result.email,
+            id: result._id,
         }, JWT_SECRET, { expiresIn: "1h" });
-        res.json({ token, given_name, family_name, email });
+        const resultGoogle = yield User_1.default.create({
+            firstName: result.givenName,
+            lastName: result.familyName,
+            email: result.email,
+        });
+        res.status(200).json({ result: resultGoogle, token });
     }
     catch (error) {
         return next(new apiError_1.InternalServerError());
     }
 });
 exports.authenticate = authenticate;
+const findByEmail = (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const { email } = req.params;
+        res.status(200).json(yield User_1.default.findOne({ email }));
+    }
+    catch (error) {
+        return next(new apiError_1.InternalServerError());
+    }
+});
+exports.findByEmail = findByEmail;
 //# sourceMappingURL=auth.js.map

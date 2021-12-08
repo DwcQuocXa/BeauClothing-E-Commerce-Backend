@@ -1,5 +1,6 @@
 import User, { UserDocument } from "../models/User";
 import mongoose from "mongoose";
+import { NotFoundError } from "../helpers/apiError";
 
 const findAll = async (): Promise<UserDocument[]> => {
   return User.find();
@@ -7,6 +8,16 @@ const findAll = async (): Promise<UserDocument[]> => {
 
 const create = async (user: UserDocument): Promise<UserDocument> => {
   return user.save();
+};
+
+const findById = async (userId: string): Promise<UserDocument> => {
+  const foundUser = await User.findById(userId);
+
+  if (!foundUser) {
+    throw new NotFoundError(`User ${userId} is not found`);
+  }
+
+  return foundUser;
 };
 
 const findOrCreate = async (payload: Partial<UserDocument>) => {
@@ -121,6 +132,7 @@ const removeProductInCart = async (
 export default {
   findAll,
   create,
+  findById,
   findOrCreate,
   getCart,
   addProductToCart,

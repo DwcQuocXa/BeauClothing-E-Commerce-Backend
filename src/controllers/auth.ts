@@ -84,7 +84,6 @@ export const signUp = async (
     res.status(200).json({ result: result, token });
   } catch (error: any) {
     if (error.name === "ValidationError") {
-      console.log("bad");
       next(new BadRequestError("Invalid Request", error));
     } else {
       next(new InternalServerError("Internal Server Error", error));
@@ -97,18 +96,49 @@ export const authenticate = async (
   res: Response,
   next: NextFunction
 ) => {
+  const { result } = req.body;
+
   try {
-    const { given_name, family_name, email } = req.user as any;
+    const existingUser = await User.findOne({ email: result.email });
+
+    if (existingUser) {
+      const token = jwt.sign(
+        { email: existingUser.email, id: existingUser._id },
+        JWT_SECRET,
+        { expiresIn: "1h" }
+      );
+      res.status(200).json({ result: existingUser, token });
+    }
+
     const token = jwt.sign(
       {
-        given_name,
-        family_name,
-        email,
+        email: result.email,
+        id: result._id,
       },
       JWT_SECRET,
       { expiresIn: "1h" }
     );
-    res.json({ token, given_name, family_name, email });
+
+    const resultGoogle = await User.create({
+      firstName: result.givenName,
+      lastName: result.familyName,
+      email: result.email,
+    });
+
+    res.status(200).json({ result: resultGoogle, token });
+  } catch (error) {
+    return next(new InternalServerError());
+  }
+};
+
+export const findByEmail = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { email } = req.params;
+    res.status(200).json(await User.findOne({ email }));
   } catch (error) {
     return next(new InternalServerError());
   }
