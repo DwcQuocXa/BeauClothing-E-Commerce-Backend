@@ -39,6 +39,6 @@
 
 ![Admin Remove Product](./readmeImg/Remove_Product.PNG)
 
-![Admin Upadte Product](./readmeImg/Upadte_Product.PNG)
+![Admin Upadte Product](./readmeImg/Update_Product.PNG)
 
 ![Admin Ban User](./readmeImg/User_List_Ban.PNG)
