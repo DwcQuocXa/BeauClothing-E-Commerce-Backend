@@ -31,7 +31,7 @@
   },
   "scripts": {
     "start": "npm run serve",
-    "serve": "tsc && nodemon ./dist/server.js",
+    "serve": "nodemon ./dist/server.js",
     "data:import": "tsc -w node ./dist/data/ImportData.js",
     "test": "jest --forceExit --detectOpenHandles --coverage --verbose false",
     "build-ts": "tsc",
