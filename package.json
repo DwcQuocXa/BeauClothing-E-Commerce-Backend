@@ -31,9 +31,12 @@
   },
   "scripts": {
     "start": "npm run serve",
+    "build": "npm run build-ts && npm run lint && npm run copy-static-assets",
     "serve": "tsc && nodemon ./dist/server.js",
     "data:import": "tsc -w node ./dist/data/ImportData.js",
-    "test": "jest --forceExit --detectOpenHandles --coverage --verbose false"
+    "test": "jest --forceExit --detectOpenHandles --coverage --verbose false",
+    "build-ts": "tsc",
+    "lint": "tsc --noEmit && eslint \"**/*.{js,ts}\" --quiet --fix"
   },
   "devDependencies": {
     "@types/cors": "^2.8.12",
